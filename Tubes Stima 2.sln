@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tubes Stima 2", "Tubes Stima 2.csproj", "{F26CF2F8-9EDB-476D-B048-06397EF31DB5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F26CF2F8-9EDB-476D-B048-06397EF31DB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F26CF2F8-9EDB-476D-B048-06397EF31DB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F26CF2F8-9EDB-476D-B048-06397EF31DB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F26CF2F8-9EDB-476D-B048-06397EF31DB5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CC526A8E-8871-4A7F-99F8-EADAA8D38A93}
+	EndGlobalSection
+EndGlobal
