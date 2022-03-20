@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/emp10/Documents/IF/6thSemester/Algorithm-Strategies/Big-Project/DFS/DFS.csproj": {}
+    "/home/emp10/Documents/IF/6thSemester/Algorithm-Strategies/Big-Project/DFS-BFS-in-Folder-Crawling/DFS/DFS.csproj": {}
   },
   "projects": {
-    "/home/emp10/Documents/IF/6thSemester/Algorithm-Strategies/Big-Project/DFS/DFS.csproj": {
+    "/home/emp10/Documents/IF/6thSemester/Algorithm-Strategies/Big-Project/DFS-BFS-in-Folder-Crawling/DFS/DFS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/emp10/Documents/IF/6thSemester/Algorithm-Strategies/Big-Project/DFS/DFS.csproj",
+        "projectUniqueName": "/home/emp10/Documents/IF/6thSemester/Algorithm-Strategies/Big-Project/DFS-BFS-in-Folder-Crawling/DFS/DFS.csproj",
         "projectName": "DFS",
-        "projectPath": "/home/emp10/Documents/IF/6thSemester/Algorithm-Strategies/Big-Project/DFS/DFS.csproj",
+        "projectPath": "/home/emp10/Documents/IF/6thSemester/Algorithm-Strategies/Big-Project/DFS-BFS-in-Folder-Crawling/DFS/DFS.csproj",
         "packagesPath": "/home/emp10/.nuget/packages/",
-        "outputPath": "/home/emp10/Documents/IF/6thSemester/Algorithm-Strategies/Big-Project/DFS/obj/",
+        "outputPath": "/home/emp10/Documents/IF/6thSemester/Algorithm-Strategies/Big-Project/DFS-BFS-in-Folder-Crawling/DFS/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/emp10/.nuget/NuGet/NuGet.Config"

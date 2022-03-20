@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "icV4w50O3LjQU1k+imD1ddvOXoTrRctuWG30a28Upq5U25yPuE4pbyTnpeBiVTF0e8TNQlOYRaLj1Ir1t2jMrQ==",
+  "dgSpecHash": "V+63n4P8pbOp7KkY8skxvpwbEWno+sWdJPz83ATVuiFqCkk68M/83rKWO70P5glMF6ArKAQFAgCyppFUR60G0A==",
   "success": true,
-  "projectFilePath": "/home/emp10/Documents/IF/6thSemester/Algorithm-Strategies/Big-Project/DFS/DFS.csproj",
+  "projectFilePath": "/home/emp10/Documents/IF/6thSemester/Algorithm-Strategies/Big-Project/DFS-BFS-in-Folder-Crawling/DFS/DFS.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
