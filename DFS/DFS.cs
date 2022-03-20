@@ -1,62 +1,62 @@
 class DFS{
-    private Stack<string> pathQueue; // Stack is used to apply DFS algorithm     
-    private List<string> requestedFilesPath;
+    private Stack<string> queueOfPath; // Stack is used to apply DFS algorithm     
+    private List<string> allFilesPathFound;
     private List<string> pathVisited;
 
     public DFS(){
-        this.pathQueue = new Stack<string>();
-        this.requestedFilesPath = new List<string>();
+        this.queueOfPath = new Stack<string>();
+        this.allFilesPathFound = new List<string>();
         this.pathVisited = new List<string>();
     }
 
-    public List<string> getFilePaths(string path, string filenameToFind, Boolean IsAllOccurences){
-        // F.S: requestedFilesPath are gotten, i.e., either empty, a string, or list of string.
+    public List<string> getRequestedFilePaths(string path, string filenameToFind, Boolean IsAllOccurences){
+        // F.S: allFilesPathFound are gotten, i.e., empty, a value, or couple of values.
 
         this.pathVisited.Add(path);
 
         if (this.isFile(path)){
             var filename = Path.GetFileName(path);
             if (filename.Equals(filenameToFind)){
-                this.requestedFilesPath.Add(path);
+                this.allFilesPathFound.Add(path);
                 if (!IsAllOccurences){
-                    return this.requestedFilesPath;
+                    return this.allFilesPathFound;
                 }
             }
 
-            if (this.pathQueue.Any()){
-                var nextPath = this.pathQueue.Pop();
-                return this.getFilePaths(nextPath, filenameToFind, IsAllOccurences);
+            if (this.queueOfPath.Any()){
+                var nextPath = this.queueOfPath.Pop();
+                return this.getRequestedFilePaths(nextPath, filenameToFind, IsAllOccurences);
             } else {
-                return this.requestedFilesPath;
+                return this.allFilesPathFound;
             }
         }
 
         else {
             this.pushAllObjectsWithinDirToQueue(path);
-            if (this.pathQueue.Any()){
-                var nextPath = this.pathQueue.Pop();
-                return this.getFilePaths(nextPath, filenameToFind, IsAllOccurences);
+            if (this.queueOfPath.Any()){
+                var nextPath = this.queueOfPath.Pop();
+                return this.getRequestedFilePaths(nextPath, filenameToFind, IsAllOccurences);
             } else {
-                return this.requestedFilesPath;
+                return this.allFilesPathFound;
             }
         }
     }
 
-    private Boolean isFile(string path){
-        return File.GetAttributes(path).HasFlag(FileAttributes.Normal);
+    public Boolean isFile(string path){
+        return !File.GetAttributes(path).HasFlag(FileAttributes.Directory);
     }
 
     private void pushAllObjectsWithinDirToQueue(string path){
-        // F.S: Files are on top of directories in pathQueue
+        // F.S: Files are on top of directories in queueOfPath
 
-        var allDirsPath = Directory.GetDirectories(path, "*", SearchOption.TopDirectoryOnly);
-        foreach (var dirPath in allDirsPath){
-            pathQueue.Push(dirPath);
+        var allDirsInPath = Directory.EnumerateDirectories(path, "*", SearchOption.TopDirectoryOnly);
+        foreach (var dirPath in allDirsInPath){
+            queueOfPath.Push(dirPath);
         }
 
-        var allFilePaths = Directory.GetFiles(path, "*", SearchOption.TopDirectoryOnly);
-        foreach (var filePath in allFilePaths){
-            pathQueue.Push(filePath);
+        var allFilesInPath = Directory.EnumerateFiles(path, "*", SearchOption.TopDirectoryOnly);
+        foreach (var filePath in allFilesInPath){
+            queueOfPath.Push(filePath);
         }
     }
 
@@ -78,15 +78,8 @@ class DFS{
         return filesAndDirsName;
     }
 
-
-
     public List<string> getFullPathsInQueue(){
-        var container = new List<string>();
-        foreach (var element in this.pathQueue){
-            container.Add(element);
-        }
-
-        return container;
+        return new List<string>(this.queueOfPath);
     }
 
     public List<string> getFileSystemNameInQueue(){
@@ -95,7 +88,7 @@ class DFS{
 
         var filesAndDirsName = new List<string>();
 
-        foreach (var path in this.pathQueue){
+        foreach (var path in this.queueOfPath){
             var fileOrDirName = Path.GetFileName(path);
             filesAndDirsName.Add(fileOrDirName);
         }
@@ -103,40 +96,50 @@ class DFS{
         return filesAndDirsName;
     }
 
-    // Methods below for testing purposes //
+    // Methods below only for testing purposes //
     public void printQueue(Boolean isFileName){
-        var container = new List<string>();
+        var queue = new List<string>();
 
         if (isFileName){
-            container = this.getFileSystemNameInQueue();
+            queue = this.getFileSystemNameInQueue();
         }
         else{
-            container = this.getFullPathsInQueue();
+            queue = this.getFullPathsInQueue();
         }
 
-        foreach (var element in container){
-            System.Console.WriteLine(element);
+        if (queue.Any()){
+            foreach (var path in queue){
+                System.Console.WriteLine(path);
+            }
+        } else{
+            System.Console.WriteLine("Queue is empty");
         }
     }
 
     public void printVisited(Boolean isFileName){
-        var container = new List<string>();
-
+        var visited = new List<string>();
         if (isFileName){
-            container = this.getFileSystemNameVisited();
-        }
-        else{
-            container = this.getFullPathsVisited();
+            visited = this.getFileSystemNameVisited();
+        } else{
+            visited = this.getFullPathsVisited();
         }
 
-        foreach (var element in container){
-            System.Console.WriteLine(element);
-        }
+        if (visited.Any()){
+            foreach (var path in visited){
+                System.Console.WriteLine(path);
+            }
+        } else{
+            System.Console.WriteLine("No path has visited");
+        }  
     }
 
     public void printRequestedFilePaths(){
-        foreach (var path in this.requestedFilesPath){
-            System.Console.WriteLine(path);
+        if (this.allFilesPathFound.Any()){
+            foreach (var path in this.allFilesPathFound){
+                System.Console.WriteLine(path);
+            }
+        } else{
+            System.Console.WriteLine("File is not found");
         }
     }
 }
