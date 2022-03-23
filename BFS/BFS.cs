@@ -39,11 +39,13 @@ namespace Tubes_2_Stima
     }
     public class BFS : filesAndFolder
     {
+        private Graph graph;
+
         public static string pathBFS = "";
 
-        public Queue<filesAndFolder> graph = new Queue<filesAndFolder>(); // Queue buat output
+        public Queue<filesAndFolder> nodeBFS = new Queue<filesAndFolder>(); // Queue buat output
 
-        public static void SearchBFS(string root, string filename)
+        public static void SearchBFS(string root, string filename, bool IsAllOccurences)
         {
             Queue<string> dirs_visited = new Queue<string>(10000);
 
@@ -54,7 +56,7 @@ namespace Tubes_2_Stima
             }
 
             dirs_visited.Enqueue(root);
-            graph.Enqueue(new filesAndFolder("", root));
+            nodeBFS.Enqueue(new filesAndFolder("", root));
 
             while (dirs_visited.Count > 0)
             {
@@ -81,7 +83,7 @@ namespace Tubes_2_Stima
                 }
                 foreach (string file in files)
                 {
-                    graph.Enqueue(new filesAndFolder(currentDir, file));
+                    nodeBFS.Enqueue(new filesAndFolder(currentDir, file));
                     try
                     {
                         System.IO.FileInfo fi = new System.IO.FileInfo(file);
@@ -89,7 +91,12 @@ namespace Tubes_2_Stima
                         {
                             pathBFS += filename;
                             System.Console.WriteLine(pathBFS);
-                            return;
+                            if (IsAllOccurences) {
+                                continue;
+                            }
+                            else {
+                                return;
+                            }
                         }
                     }
                     catch (System.IO.FileNotFoundException e)
@@ -119,9 +126,32 @@ namespace Tubes_2_Stima
                 foreach (string str in subDirs)
                 {
                     dirs_visited.Enqueue(str);
-                    graph.Enqueue(new filesAndFolder(currentDir, str));
+                    nodeBFS.Enqueue(new filesAndFolder(currentDir, str));
                 }
             }
+        }
+        public void createGraphBFS() 
+        { 
+            foreach (filesAndFolder anak in filename.nodeBFS)
+            {
+                foreach (filesAndFolder ortu in filename.nodeBFS)
+                {
+                    if (anak.parent == ortu.direct)
+                    {
+                        graph.AddEdge(ortu.direct, anak.direct);
+                        graph.FindNode(anak.parent).Label.Text = new DirectoryInfo(anak.parent).Name;
+                        graph.FindNode(anak.direct).Label.Text = new DirectoryInfo(anak.direct).Name;
+                        break;
+                    }
+                }
+                if (String.Compare(Path.GetFileName(anak.direct), bfs_search.namafile) == 0)
+                {
+                    graph.FindNode(anak.direct).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Green;
+                }
+            }
+        }
+        public void getGraphBFS() {
+            return this.graph;
         }
     }
 }
