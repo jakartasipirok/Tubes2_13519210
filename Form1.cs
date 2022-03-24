@@ -48,8 +48,8 @@ namespace Tubes_Stima_2
             string dir = label1.Text;
             string filename = textBox1.Text;
             BFS test = new BFS();
-            test.SearchBFS(dir, filename, true);
-            test.createGraphBFS(filename);
+            test.SearchBFS(@"C:\Users\Kevin\Documents\test", "heiya.txt", true);
+            test.createGraphBFS("heiya.txt");
             panel1.SuspendLayout();
             panel1.Controls.Add(viewer);
             panel1.ResumeLayout();
@@ -66,6 +66,21 @@ namespace Tubes_Stima_2
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string dir = label1.Text;
+            string filename = textBox1.Text;
+            BFS test = new BFS();
+            test.SearchBFS(dir, filename, false);
+            test.createGraphBFS(filename);
+            panel1.SuspendLayout();
+            panel1.Controls.Add(viewer);
+            panel1.ResumeLayout();
+            panel1.Show();
+            viewer.Graph = test.getGraphBFS();
+            viewer.Dock = DockStyle.Fill;
         }
     }
 }
