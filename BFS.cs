@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,28 +7,26 @@ using System.IO;
 using Microsoft.Msagl.Drawing;
 using Microsoft.Msagl.GraphViewerGdi;
 
-
-
 namespace Tubes_Stima_2
 {
-    public class filesAndFolder
+    public class filesAndFolderBFS
     {
         public string parent;
         public string direct;
 
-        public filesAndFolder()
+        public filesAndFolderBFS()
          {
              this.parent = "";
              this.direct = "";
          }
 
-        public filesAndFolder(string parent, string direct)
+        public filesAndFolderBFS(string parent, string direct)
         {
             this.parent = parent;
             this.direct = direct;
         }
 
-        public filesAndFolder(filesAndFolder fl)
+        public filesAndFolderBFS(filesAndFolderBFS fl)
         {
             this.parent = fl.parent;
             this.direct = fl.direct;
@@ -40,23 +38,18 @@ namespace Tubes_Stima_2
             this.direct = direct;
         }
     }
-    class BFS : filesAndFolder
+    class BFS : filesAndFolderBFS
     {
         private Graph graph;
-
         public static string pathBFS = "";
-
-        public Queue<filesAndFolder> nodeBFS = new Queue<filesAndFolder>(); // Queue buat output
-
+        public Queue<filesAndFolderBFS> nodeBFS = new Queue<filesAndFolderBFS>(); // Queue buat output
         public BFS()
         {
             this.graph = new Graph();
         }
-
         public void SearchBFS(string root, string filename, bool IsAllOccurences)
         {
             Queue<string> dirs_visited = new Queue<string>(10000);
-
 
             if (!System.IO.Directory.Exists(root))
             {
@@ -64,7 +57,7 @@ namespace Tubes_Stima_2
             }
 
             dirs_visited.Enqueue(root);
-            nodeBFS.Enqueue(new filesAndFolder("", root));
+            nodeBFS.Enqueue(new filesAndFolderBFS("", root));
 
             while (dirs_visited.Count > 0)
             {
@@ -91,7 +84,7 @@ namespace Tubes_Stima_2
                 }
                 foreach (string file in files)
                 {
-                    nodeBFS.Enqueue(new filesAndFolder(currentDir, file));
+                    nodeBFS.Enqueue(new filesAndFolderBFS(currentDir, file));
                     try
                     {
                         System.IO.FileInfo fi = new System.IO.FileInfo(file);
@@ -136,15 +129,15 @@ namespace Tubes_Stima_2
                 foreach (string str in subDirs)
                 {
                     dirs_visited.Enqueue(str);
-                    nodeBFS.Enqueue(new filesAndFolder(currentDir, str));
+                    nodeBFS.Enqueue(new filesAndFolderBFS(currentDir, str));
                 }
             }
         }
         public void createGraphBFS(string namafile)
         {
-            foreach (filesAndFolder anak in nodeBFS)
+            foreach (filesAndFolderBFS anak in nodeBFS)
             {
-                foreach (filesAndFolder ortu in nodeBFS)
+                foreach (filesAndFolderBFS ortu in nodeBFS)
                 {
                     if (anak.parent == ortu.direct)
                     {
