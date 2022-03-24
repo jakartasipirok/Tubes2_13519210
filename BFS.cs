@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,11 +7,9 @@ using System.IO;
 using Microsoft.Msagl.Drawing;
 using Microsoft.Msagl.GraphViewerGdi;
 
-
-
 namespace Tubes_Stima_2
 {
-    public class filesAndFolder
+    public class filesAndFolderBFS
     {
         public string parent;
         public string direct;
@@ -34,7 +32,7 @@ namespace Tubes_Stima_2
             this.id = id;
         }
 
-        public filesAndFolder(filesAndFolder fl)
+        public filesAndFolderBFS(filesAndFolderBFS fl)
         {
             this.parent = fl.parent;
             this.direct = fl.direct;
@@ -48,10 +46,9 @@ namespace Tubes_Stima_2
             this.direct = direct;
         }
     }
-    class BFS : filesAndFolder
+    class BFS : filesAndFolderBFS
     {
         private Graph graph;
-
         public static string pathBFS = "";
 
         public Queue<filesAndFolder> nodeBFS = new Queue<filesAndFolder>(); // Queue buat output
@@ -124,7 +121,6 @@ namespace Tubes_Stima_2
         public void SearchBFS(string root, string filename, bool IsAllOccurences)
         {
             Queue<string> dirs_visited = new Queue<string>(10000);
-
 
             if (!System.IO.Directory.Exists(root))
             {
@@ -219,9 +215,9 @@ namespace Tubes_Stima_2
         }
         public void createGraphBFS(string namafile)
         {
-            foreach (filesAndFolder anak in nodeBFS)
+            foreach (filesAndFolderBFS anak in nodeBFS)
             {
-                foreach (filesAndFolder ortu in nodeBFS)
+                foreach (filesAndFolderBFS ortu in nodeBFS)
                 {
                     if (anak.parent == ortu.direct)
                     {
