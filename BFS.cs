@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 using System.IO;
 using Microsoft.Msagl.Drawing;
 using Microsoft.Msagl.GraphViewerGdi;
+using System.Diagnostics;
+
+
 
 namespace Tubes_Stima_2
 {
-    public class filesAndFolderBFS
+    public class filesAndFolder
     {
         public string parent;
         public string direct;
@@ -32,7 +35,7 @@ namespace Tubes_Stima_2
             this.id = id;
         }
 
-        public filesAndFolderBFS(filesAndFolderBFS fl)
+        public filesAndFolder(filesAndFolder fl)
         {
             this.parent = fl.parent;
             this.direct = fl.direct;
@@ -46,17 +49,17 @@ namespace Tubes_Stima_2
             this.direct = direct;
         }
     }
-    class BFS : filesAndFolderBFS
+    class BFS : filesAndFolder
     {
         private Graph graph;
+        private Stopwatch stopwatch;
         public static string pathBFS = "";
 
         public Queue<filesAndFolder> nodeBFS = new Queue<filesAndFolder>(); // Queue buat output
-        public Queue<filesAndFolder> nodeFound = new Queue<filesAndFolder>();
-        public Queue<filesAndFolder> nodeChecked = new Queue<filesAndFolder>();
         public BFS()
         {
             this.graph = new Graph();
+            this.stopwatch = new Stopwatch();
         }
         public void pathFound(filesAndFolder found)
         {
@@ -68,18 +71,6 @@ namespace Tubes_Stima_2
                 found = getNodeByName(parentname);
                 curr = found.id;
             }
-            //foreach (filesAndFolder ortu in nodeBFS)
-            //{
-            //    foreach (filesAndFolder anak in nodeBFS)
-            //    {
-            //        if ((anak.parent == ortu.direct) && (curr == anak.direct))
-            //        {
-            //            anak.status = "found";
-            //            ortu.status = "found";
-            //            curr = anak.parent;
-            //        }
-            //    }
-            //}
         }
 
         public void pathFalse(filesAndFolder found)
@@ -92,24 +83,12 @@ namespace Tubes_Stima_2
                 found = getNodeByName(parentname);
                 curr = found.id;
             }
-            //foreach (filesAndFolder ortu in nodeBFS)
-            //{
-            //    foreach (filesAndFolder anak in nodeBFS)
-            //    {
-            //        if ((anak.parent == ortu.direct) && (curr == anak.direct))
-            //        {
-            //            anak.status = "found";
-            //            ortu.status = "found";
-            //            curr = anak.parent;
-            //        }
-            //    }
-            //}
         }
         filesAndFolder getNodeByName(string name)
         {
             foreach (filesAndFolder anak in nodeBFS)
             {
-                if(anak.direct == name)
+                if (anak.direct == name)
                 {
                     return (anak);
                 }
@@ -117,10 +96,18 @@ namespace Tubes_Stima_2
             return null;
         }
 
+        public string getTimeElapsed()
+        {
+            TimeSpan ts = this.stopwatch.Elapsed;
+
+            return (ts.ToString(@"mm\:ss\.ffff"));
+        }
 
         public void SearchBFS(string root, string filename, bool IsAllOccurences)
         {
+            this.stopwatch.Start();
             Queue<string> dirs_visited = new Queue<string>(10000);
+
 
             if (!System.IO.Directory.Exists(root))
             {
@@ -173,6 +160,7 @@ namespace Tubes_Stima_2
                             }
                             else
                             {
+                                this.stopwatch.Stop();
                                 return;
                             }
                         }
@@ -212,12 +200,13 @@ namespace Tubes_Stima_2
                     id++;
                 }
             }
+            this.stopwatch.Stop();
         }
-        public void createGraphBFS(string namafile)
+        public void createGraphBFS()
         {
-            foreach (filesAndFolderBFS anak in nodeBFS)
+            foreach (filesAndFolder anak in nodeBFS)
             {
-                foreach (filesAndFolderBFS ortu in nodeBFS)
+                foreach (filesAndFolder ortu in nodeBFS)
                 {
                     if (anak.parent == ortu.direct)
                     {

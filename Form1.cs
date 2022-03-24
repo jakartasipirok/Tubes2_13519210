@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Msagl.Drawing;
 using Microsoft.Msagl.GraphViewerGdi;
+using System.Diagnostics;
 
 namespace Tubes_Stima_2
 {
@@ -45,18 +46,40 @@ namespace Tubes_Stima_2
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string dir = label1.Text;
-            string filename = textBox1.Text;
-            BFS test = new BFS();
-            test.SearchBFS(@"C:\Users\Kevin\Documents\test", "heiya.txt", true);
-            test.createGraphBFS("heiya.txt");
-            panel1.SuspendLayout();
-            panel1.Controls.Add(viewer);
-            panel1.ResumeLayout();
-            panel1.Show();
-            viewer.Graph = test.getGraphBFS();
-            viewer.Dock = DockStyle.Fill;
+            if (comboBox2.Items[comboBox2.SelectedIndex].ToString() == "DFS")
+            {
+                string dir = label1.Text;
+                string filename = textBox1.Text;
+                DFS test = new DFS();
+                test.SearchDFS(dir, filename, true);
+                test.createGraphDFS();
+                string duration = test.getTimeElapsed();
+                label2.Text = duration;
+                panel1.SuspendLayout();
+                panel1.Controls.Add(viewer);
+                panel1.ResumeLayout();
+                panel1.Show();
+                viewer.Graph = test.getGraphDFS();
+                viewer.Dock = DockStyle.Fill;
+            }
+            else
+            {
+                string dir = label1.Text;
+                string filename = textBox1.Text;
+                BFS test = new BFS();
+                test.SearchBFS(dir, filename, true);
+                test.createGraphBFS();
+                string duration = test.getTimeElapsed();
+                label2.Text = duration;
+                panel1.SuspendLayout();
+                panel1.Controls.Add(viewer);
+                panel1.ResumeLayout();
+                panel1.Show();
+                viewer.Graph = test.getGraphBFS();
+                viewer.Dock = DockStyle.Fill;
+            }
         }
+
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
@@ -70,17 +93,48 @@ namespace Tubes_Stima_2
 
         private void button3_Click(object sender, EventArgs e)
         {
-            string dir = label1.Text;
-            string filename = textBox1.Text;
-            BFS test = new BFS();
-            test.SearchBFS(dir, filename, false);
-            test.createGraphBFS(filename);
-            panel1.SuspendLayout();
-            panel1.Controls.Add(viewer);
-            panel1.ResumeLayout();
-            panel1.Show();
-            viewer.Graph = test.getGraphBFS();
-            viewer.Dock = DockStyle.Fill;
+            if (comboBox2.Items[comboBox2.SelectedIndex].ToString() == "DFS")
+            {
+                string dir = label1.Text;
+                string filename = textBox1.Text;
+                DFS test = new DFS();
+                test.SearchDFS(dir, filename, true);
+                test.createGraphDFS();
+                string duration = test.getTimeElapsed();
+                label2.Text = duration;
+                panel1.SuspendLayout();
+                panel1.Controls.Add(viewer);
+                panel1.ResumeLayout();
+                panel1.Show();
+                viewer.Graph = test.getGraphDFS();
+                viewer.Dock = DockStyle.Fill;
+            }
+            else
+            {
+                string dir = label1.Text;
+                string filename = textBox1.Text;
+                BFS test = new BFS();
+                test.SearchBFS(dir, filename, true);
+                test.createGraphBFS();
+                string duration = test.getTimeElapsed();
+                label2.Text = duration;
+                panel1.SuspendLayout();
+                panel1.Controls.Add(viewer);
+                panel1.ResumeLayout();
+                panel1.Show();
+                viewer.Graph = test.getGraphBFS();
+                viewer.Dock = DockStyle.Fill;
+            }
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.IO;
 using Microsoft.Msagl.Drawing;
 using Microsoft.Msagl.GraphViewerGdi;
+using System.Diagnostics;
+
 
 namespace Tubes_Stima_2
 {
@@ -13,26 +15,34 @@ namespace Tubes_Stima_2
     {
         public string parent;
         public string direct;
+        public string status;
+        public int id;
 
         public filesAndFolderDFS()
-         {
-             this.parent = "";
-             this.direct = "";
-         }
+        {
+            this.parent = "";
+            this.direct = "";
+            this.status = "queued";
+            this.id = -999;
+        }
 
-        public filesAndFolderDFS(string parent, string direct)
+        public filesAndFolderDFS(string parent, string direct, string status, int id)
         {
             this.parent = parent;
             this.direct = direct;
+            this.status = status;
+            this.id = id;
         }
 
-        public filesAndFolderDFS(filesAndFolderDFS fl)
+        public filesAndFolderDFS(filesAndFolder fl)
         {
             this.parent = fl.parent;
             this.direct = fl.direct;
+            this.status = fl.status;
+            this.id = fl.id;
         }
 
-        public void setvalue(string parent,string direct)
+        public void setvalue(string parent, string direct)
         {
             this.parent = parent;
             this.direct = direct;
@@ -41,7 +51,7 @@ namespace Tubes_Stima_2
     public class DFS : filesAndFolderDFS
     {
         private Graph graph;
-        
+        private Stopwatch stopwatch;
         public static string pathDFS = "";
         
         public Queue<filesAndFolderDFS> nodeDFS = new Queue<filesAndFolderDFS>();
@@ -49,10 +59,43 @@ namespace Tubes_Stima_2
         public DFS()
         {
             this.graph = new Graph();
+            this.stopwatch = new Stopwatch();
         }
-        
+
+        public void pathFound(filesAndFolderDFS found)
+        {
+            int curr = found.id;
+            while (curr != -1)
+            {
+                found.status = "found";
+                string parentname = found.parent;
+                found = getNodeByNameDFS(parentname);
+                curr = found.id;
+            }
+        }
+
+        filesAndFolderDFS getNodeByNameDFS(string name)
+        {
+            foreach (filesAndFolderDFS anak in nodeDFS)
+            {
+                if (anak.direct == name)
+                {
+                    return (anak);
+                }
+            }
+            return null;
+        }
+
+        public string getTimeElapsed()
+        {
+            TimeSpan ts = this.stopwatch.Elapsed;
+
+            return (ts.ToString(@"mm\:ss\.ffff"));
+        }
+
         public void SearchDFS(string root, string filename, bool IsAllOccurences)
         {
+            this.stopwatch.Start();
             Stack<string> dirs_visited = new Stack<string>(10000);
         
 
@@ -60,9 +103,9 @@ namespace Tubes_Stima_2
             {
                 throw new ArgumentException();
             }
-
+            int id = 1;
             dirs_visited.Push(root);
-            nodeDFS.Enqueue(new filesAndFolderDFS("", root));
+            nodeDFS.Enqueue(new filesAndFolderDFS("", root, "false", -1));
 
             while (dirs_visited.Count > 0)
             {
@@ -89,12 +132,15 @@ namespace Tubes_Stima_2
                 }
                 foreach (string file in files)
                 {
-                    nodeDFS.Enqueue(new filesAndFolderDFS(currentDir, file));
+                    filesAndFolderDFS proccess = new filesAndFolderDFS(currentDir, file, "false", id);
+                    nodeDFS.Enqueue(proccess);
+                    id++;
                     try
                     {
                         System.IO.FileInfo fi = new System.IO.FileInfo(file);
                         if (fi.Name == filename)
                         {
+                            pathFound(proccess);
                             pathDFS += filename;
                             System.Console.WriteLine(pathDFS);
                             if (IsAllOccurences)
@@ -103,6 +149,7 @@ namespace Tubes_Stima_2
                             }
                             else
                             {
+                                this.stopwatch.Stop();
                                 return;
                             }
                         }
@@ -134,11 +181,13 @@ namespace Tubes_Stima_2
                 foreach (string str in subdirs)
                 {
                     dirs_visited.Push(str);
-                    nodeDFS.Enqueue(new filesAndFolderDFS(currentDir, str));
+                    nodeDFS.Enqueue(new filesAndFolderDFS(currentDir, str, "false", id));
+                    id++;
                 }
             }
+            this.stopwatch.Stop();
         }
-        public void createGraphDFS(string namafile)
+        public void createGraphDFS()
         {
             foreach (filesAndFolderDFS anak in nodeDFS)
             {
@@ -146,15 +195,26 @@ namespace Tubes_Stima_2
                 {
                     if (anak.parent == ortu.direct)
                     {
-                        graph.AddEdge(ortu.direct, anak.direct);
-                        graph.FindNode(anak.parent).Label.Text = new DirectoryInfo(anak.parent).Name;
-                        graph.FindNode(anak.direct).Label.Text = new DirectoryInfo(anak.direct).Name;
-                        break;
+
+                        if (anak.status == "found")
+                        {
+                            graph.AddEdge(ortu.direct, anak.direct).Attr.Color = Microsoft.Msagl.Drawing.Color.Green;
+                            graph.FindNode(anak.direct).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Green;
+                            graph.FindNode(anak.parent).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Green;
+                            graph.FindNode(anak.parent).Label.Text = new DirectoryInfo(anak.parent).Name;
+                            graph.FindNode(anak.direct).Label.Text = new DirectoryInfo(anak.direct).Name;
+                            break;
+                        }
+                        else
+                        {
+                            graph.AddEdge(ortu.direct, anak.direct).Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
+                            graph.FindNode(anak.direct).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Red;
+                            graph.FindNode(anak.parent).Label.Text = new DirectoryInfo(anak.parent).Name;
+                            graph.FindNode(anak.direct).Label.Text = new DirectoryInfo(anak.direct).Name;
+                            break;
+                        }
+
                     }
-                }
-                if (String.Compare(Path.GetFileName(anak.direct), namafile) == 0)
-                {
-                    graph.FindNode(anak.direct).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Green;
                 }
             }
         }
