@@ -1,0 +1,16 @@
+C:\Users\Kevin\Documents\kuliah\Semester 4\stima\tubes 2\DFS-BFS-in-Folder-Crawling\src\bin\Debug\Tubes Stima 2.exe.config
+C:\Users\Kevin\Documents\kuliah\Semester 4\stima\tubes 2\DFS-BFS-in-Folder-Crawling\src\bin\Debug\Tubes Stima 2.exe
+C:\Users\Kevin\Documents\kuliah\Semester 4\stima\tubes 2\DFS-BFS-in-Folder-Crawling\src\bin\Debug\Tubes Stima 2.pdb
+C:\Users\Kevin\Documents\kuliah\Semester 4\stima\tubes 2\DFS-BFS-in-Folder-Crawling\src\bin\Debug\AutomaticGraphLayout.dll
+C:\Users\Kevin\Documents\kuliah\Semester 4\stima\tubes 2\DFS-BFS-in-Folder-Crawling\src\bin\Debug\AutomaticGraphLayout.Drawing.dll
+C:\Users\Kevin\Documents\kuliah\Semester 4\stima\tubes 2\DFS-BFS-in-Folder-Crawling\src\bin\Debug\Microsoft.Msagl.GraphViewerGdi.dll
+C:\Users\Kevin\Documents\kuliah\Semester 4\stima\tubes 2\DFS-BFS-in-Folder-Crawling\src\bin\Debug\Microsoft.Msagl.WpfGraphControl.dll
+C:\Users\Kevin\Documents\kuliah\Semester 4\stima\tubes 2\DFS-BFS-in-Folder-Crawling\src\obj\Debug\Tubes Stima 2.csproj.AssemblyReference.cache
+C:\Users\Kevin\Documents\kuliah\Semester 4\stima\tubes 2\DFS-BFS-in-Folder-Crawling\src\obj\Debug\Tubes Stima 2.csproj.SuggestedBindingRedirects.cache
+C:\Users\Kevin\Documents\kuliah\Semester 4\stima\tubes 2\DFS-BFS-in-Folder-Crawling\src\obj\Debug\Tubes_Stima_2.Form1.resources
+C:\Users\Kevin\Documents\kuliah\Semester 4\stima\tubes 2\DFS-BFS-in-Folder-Crawling\src\obj\Debug\Tubes_Stima_2.Properties.Resources.resources
+C:\Users\Kevin\Documents\kuliah\Semester 4\stima\tubes 2\DFS-BFS-in-Folder-Crawling\src\obj\Debug\Tubes Stima 2.csproj.GenerateResource.cache
+C:\Users\Kevin\Documents\kuliah\Semester 4\stima\tubes 2\DFS-BFS-in-Folder-Crawling\src\obj\Debug\Tubes Stima 2.csproj.CoreCompileInputs.cache
+C:\Users\Kevin\Documents\kuliah\Semester 4\stima\tubes 2\DFS-BFS-in-Folder-Crawling\src\obj\Debug\Tubes Stima 2.csproj.CopyComplete
+C:\Users\Kevin\Documents\kuliah\Semester 4\stima\tubes 2\DFS-BFS-in-Folder-Crawling\src\obj\Debug\Tubes Stima 2.exe
+C:\Users\Kevin\Documents\kuliah\Semester 4\stima\tubes 2\DFS-BFS-in-Folder-Crawling\src\obj\Debug\Tubes Stima 2.pdb
