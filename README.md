@@ -19,4 +19,4 @@ Enjoy the app.
 |----------|-----------------------------|
 | 13510210 | Dwi Kalam Amal Tauhid       | 
 | 13520008 | Daniel Salim                | 
-| 13520117 | Kevin Roni                  |
+| 13520114 | Kevin Roni                  |
