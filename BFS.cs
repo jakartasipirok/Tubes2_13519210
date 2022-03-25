@@ -54,12 +54,14 @@ namespace Tubes_Stima_2
         private Graph graph;
         private Stopwatch stopwatch;
         public static string pathBFS = "";
+        private List<string> listPathBFS;
 
         public Queue<filesAndFolder> nodeBFS = new Queue<filesAndFolder>(); // Queue buat output
         public BFS()
         {
             this.graph = new Graph();
             this.stopwatch = new Stopwatch();
+            this.listPathBFS = new List<string>(10000);
         }
         public void pathFound(filesAndFolder found)
         {
@@ -96,6 +98,11 @@ namespace Tubes_Stima_2
             return null;
         }
 
+        public List<string> getListPathBFS()
+        {
+            return this.listPathBFS;
+        }
+
         public string getTimeElapsed()
         {
             TimeSpan ts = this.stopwatch.Elapsed;
@@ -107,6 +114,7 @@ namespace Tubes_Stima_2
         {
             this.stopwatch.Start();
             Queue<string> dirs_visited = new Queue<string>(10000);
+
 
 
             if (!System.IO.Directory.Exists(root))
@@ -146,12 +154,17 @@ namespace Tubes_Stima_2
                     filesAndFolder proccess = new filesAndFolder(currentDir, file, "queued", id);
                     id++;
                     nodeBFS.Enqueue(proccess);
+                }
+                foreach (string file in files)
+                {
                     try
                     {
+                        filesAndFolder proccess = getNodeByName(file);
                         System.IO.FileInfo fi = new System.IO.FileInfo(file);
                         if (fi.Name == filename)
                         {
                             pathFound(proccess);
+                            this.listPathBFS.Add(pathBFS);
                             pathBFS += filename;
                             System.Console.WriteLine(pathBFS);
                             if (IsAllOccurences)

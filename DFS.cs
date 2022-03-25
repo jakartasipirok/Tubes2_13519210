@@ -53,6 +53,7 @@ namespace Tubes_Stima_2
         private Graph graph;
         private Stopwatch stopwatch;
         public static string pathDFS = "";
+        private List<string> listPathDFS;
         
         public Queue<filesAndFolderDFS> nodeDFS = new Queue<filesAndFolderDFS>();
         
@@ -60,6 +61,7 @@ namespace Tubes_Stima_2
         {
             this.graph = new Graph();
             this.stopwatch = new Stopwatch();
+            this.listPathDFS = new List<string>(10000);
         }
 
         public void pathFound(filesAndFolderDFS found)
@@ -74,6 +76,22 @@ namespace Tubes_Stima_2
             }
         }
 
+        public void pathFalse(filesAndFolderDFS found)
+        {
+            int curr = found.id;
+            while (curr != -1 && found.status != "found")
+            {
+                found.status = "false";
+                string parentname = found.parent;
+                found = getNodeByNameDFS(parentname);
+                curr = found.id;
+            }
+        }
+
+        public List<string> getListPathDFS()
+        {
+            return this.listPathDFS;
+        }
         filesAndFolderDFS getNodeByNameDFS(string name)
         {
             foreach (filesAndFolderDFS anak in nodeDFS)
@@ -132,7 +150,7 @@ namespace Tubes_Stima_2
                 }
                 foreach (string file in files)
                 {
-                    filesAndFolderDFS proccess = new filesAndFolderDFS(currentDir, file, "false", id);
+                    filesAndFolderDFS proccess = new filesAndFolderDFS(currentDir, file, "queued", id);
                     nodeDFS.Enqueue(proccess);
                     id++;
                     try
@@ -141,7 +159,7 @@ namespace Tubes_Stima_2
                         if (fi.Name == filename)
                         {
                             pathFound(proccess);
-                            pathDFS += filename;
+                            this.listPathDFS.Add(pathDFS);
                             System.Console.WriteLine(pathDFS);
                             if (IsAllOccurences)
                             {
@@ -152,6 +170,10 @@ namespace Tubes_Stima_2
                                 this.stopwatch.Stop();
                                 return;
                             }
+                        }
+                        else
+                        {
+                            pathFalse(proccess);
                         }
                     }
                     catch (System.IO.FileNotFoundException e)
@@ -181,7 +203,7 @@ namespace Tubes_Stima_2
                 foreach (string str in subdirs)
                 {
                     dirs_visited.Push(str);
-                    nodeDFS.Enqueue(new filesAndFolderDFS(currentDir, str, "false", id));
+                    nodeDFS.Enqueue(new filesAndFolderDFS(currentDir, str, "queued", id));
                     id++;
                 }
             }
@@ -205,7 +227,7 @@ namespace Tubes_Stima_2
                             graph.FindNode(anak.direct).Label.Text = new DirectoryInfo(anak.direct).Name;
                             break;
                         }
-                        else
+                        else if (anak.status == "false")
                         {
                             graph.AddEdge(ortu.direct, anak.direct).Attr.Color = Microsoft.Msagl.Drawing.Color.Red;
                             graph.FindNode(anak.direct).Attr.FillColor = Microsoft.Msagl.Drawing.Color.Red;
