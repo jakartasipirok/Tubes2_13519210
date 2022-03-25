@@ -6,10 +6,11 @@ Pada Tugas Besar kali ini kami membuat sebuah program folder crawling yang dapat
 2. MSAgl
 
 ## How to Run
-Make sure you are using Linux with C++17. WSL also works if you are using Windows.
+Pastikan visual studio 2022 .NET sudah terinstall pada perangkat anda
 ```
-sudo apt-get install make g++
-make all
+1. Clone repository ini
+2. Buka folder bin -> Debug -> Tubes Stima 2.exe
+3. Jika langkah di atas tidak bisa, buka project pada visual studio, lalu run program pada solution yang ada di src
 ```
 Using the current main file, it should return that 8 out of 8 tests passed.
 
