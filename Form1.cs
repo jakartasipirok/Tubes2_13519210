@@ -67,7 +67,6 @@ namespace Tubes_Stima_2
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -187,6 +186,14 @@ namespace Tubes_Stima_2
         private void label3_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBox1_Enter(object sender, EventArgs e)
+        {
+            if (textBox1.Text == "Input Filename")
+            {
+                textBox1.Text = "";
+            }
         }
     }
 }
