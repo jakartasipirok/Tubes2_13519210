@@ -1,4 +1,4 @@
-## Tugas Besar 2 IF2211 Strategi ALgoritma - Kelompok 13519210
+## Tugas Besar 2 IF2211 Strategi Algoritma - Kelompok 13519210
 Pada Tugas Besar kali ini kami membuat sebuah program folder crawling yang dapat mencari suatu file dari input pengguna dengan metode yang diinginkan, BFS atau DFS, dan akan dibuat visualisasi rute perjalanan pencarian dengan tree dari root folder sampai berhasil bertemu dengan file yang dicari.
 
 ## Requirements
